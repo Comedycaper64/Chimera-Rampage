@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,16 +13,36 @@ namespace Chimera
         public override void Enter()
         {
             ChangeActiveHead(ChimeraHead.Goat);
+            stateMachine.inputManager.SecondaryAbilityEvent += WailAbility;
             stateMachine.inputManager.SwitchLeftEvent += SwitchToLion;
             stateMachine.inputManager.SwitchRightEvent += SwitchToDragon;
         }
 
         public override void Exit()
         {
+            stateMachine.inputManager.SecondaryAbilityEvent -= WailAbility;
             stateMachine.inputManager.SwitchLeftEvent -= SwitchToLion;
             stateMachine.inputManager.SwitchRightEvent -= SwitchToDragon;
         }
 
-        public override void Tick(float deltaTime) { }
+        public override void Tick(float deltaTime)
+        {
+            if (
+                stateMachine.inputManager.isPrimaryAbilityHeld
+                && (stateMachine.chimeraCooldowns.ramCooldown <= 0f)
+            )
+            {
+                stateMachine.SwitchState(new ChimeraGoatRamState(stateMachine));
+                return;
+            }
+        }
+
+        private void WailAbility()
+        {
+            if (stateMachine.chimeraCooldowns.wailCooldown <= 0f)
+            {
+                stateMachine.SwitchState(new ChimeraGoatWailState(stateMachine));
+            }
+        }
     }
 }

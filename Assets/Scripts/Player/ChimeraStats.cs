@@ -22,18 +22,25 @@ namespace Chimera
 
         [Header("Swipe Ability")]
         public int swipeDamage;
-        public float swipeAreaOfEffect;
+
+        [Range(0, 1)]
+        public float swipeArc;
+        public float swipeRange;
         public float swipeCooldown;
 
         [Header("Devour Ability")]
         public int devourDamage;
+
+        [Range(0, 1)]
+        public float devourArc;
         public float devourRange;
         public float devourCooldown;
 
         [Header("Ram Ability")]
         public int ramDamage;
         public float ramKnockback;
-        public float ramDashSpeed;
+        public float ramHitboxSize;
+        public float ramDashTime;
         public float ramDashDistance;
         public float ramCooldown;
 

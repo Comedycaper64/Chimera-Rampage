@@ -31,6 +31,17 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+    public void Heal(int amountToHeal)
+    {
+        health = Mathf.Min(maxHealth, health + amountToHeal);
+        OnNewHealth?.Invoke(this, (float)health / maxHealth);
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
     private void Die()
     {
         OnDeath?.Invoke();

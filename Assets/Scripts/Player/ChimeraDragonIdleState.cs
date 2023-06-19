@@ -14,14 +14,14 @@ namespace Chimera
         public override void Enter()
         {
             ChangeActiveHead(ChimeraHead.Dragon);
-            stateMachine.inputManager.SecondaryAbilityEvent += FireBreath;
+            stateMachine.inputManager.SecondaryAbilityEvent += FireBreathAbility;
             stateMachine.inputManager.SwitchLeftEvent += SwitchToGoat;
             stateMachine.inputManager.SwitchRightEvent += SwitchToLion;
         }
 
         public override void Exit()
         {
-            stateMachine.inputManager.SecondaryAbilityEvent -= FireBreath;
+            stateMachine.inputManager.SecondaryAbilityEvent -= FireBreathAbility;
             stateMachine.inputManager.SwitchLeftEvent -= SwitchToGoat;
             stateMachine.inputManager.SwitchRightEvent -= SwitchToLion;
         }
@@ -38,7 +38,7 @@ namespace Chimera
             }
         }
 
-        private void FireBreath()
+        private void FireBreathAbility()
         {
             if (stateMachine.chimeraCooldowns.breathCooldown <= 0f)
             {

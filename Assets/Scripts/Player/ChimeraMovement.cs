@@ -8,6 +8,9 @@ namespace Chimera
     {
         [SerializeField]
         private Animator bodyAnimator;
+
+        [SerializeField]
+        private Transform visualTransform;
         private InputManager inputManager;
         private bool canMove;
         private float movementSpeed;
@@ -27,6 +30,14 @@ namespace Chimera
                     new Vector3(inputManager.MovementValue.x, inputManager.MovementValue.y)
                     * movementSpeed
                     * Time.deltaTime;
+                if (inputManager.MovementValue.x < 0)
+                {
+                    visualTransform.eulerAngles = new Vector3(0, 180, 0);
+                }
+                else if (inputManager.MovementValue.x > 0)
+                {
+                    visualTransform.eulerAngles = new Vector3(0, 0, 0);
+                }
             }
             bodyAnimator.SetFloat(
                 "Speed",

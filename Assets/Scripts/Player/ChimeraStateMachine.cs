@@ -13,9 +13,13 @@ namespace Chimera
         public HealthSystem chimeraHealth;
         public ChimeraStats chimeraStats;
         public ChimeraCooldowns chimeraCooldowns;
+        public ChimeraMovement chimeraMovement;
         public ChimeraCursorPointer chimeraCursor;
+        public ChimeraRammingHitbox chimeraRammingHitbox;
 
         //public ChimeraUI chimeraUI;
+        [SerializeField]
+        public Animator bodyAnimator;
 
         [SerializeField]
         public Animator lionHeadAnimator;
@@ -38,6 +42,7 @@ namespace Chimera
             chimeraHealth = GetComponent<HealthSystem>();
             chimeraStats = GetComponent<ChimeraStats>();
             chimeraCooldowns = GetComponent<ChimeraCooldowns>();
+            chimeraMovement = GetComponent<ChimeraMovement>();
             //chimeraUI = GameObject.FindGameObjectWithTag("ChimeraUI").GetComponent<ChimeraUI>();
         }
 
