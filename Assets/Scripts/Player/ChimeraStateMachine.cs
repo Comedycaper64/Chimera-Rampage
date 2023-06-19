@@ -13,6 +13,7 @@ namespace Chimera
         public HealthSystem chimeraHealth;
         public ChimeraStats chimeraStats;
         public ChimeraCooldowns chimeraCooldowns;
+        public ChimeraCursorPointer chimeraCursor;
 
         //public ChimeraUI chimeraUI;
 
@@ -26,6 +27,10 @@ namespace Chimera
         public Animator goatHeadAnimator;
 
         public ChimeraHead activeHead;
+        public LayerMask enemyLayerMask;
+
+        [Header("Instantiated Objects")]
+        public GameObject emberProjectile;
 
         private void Awake()
         {
