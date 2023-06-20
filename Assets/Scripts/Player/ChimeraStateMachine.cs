@@ -10,12 +10,12 @@ namespace Chimera
         public EventHandler<ChimeraHead> OnHeadChanged;
 
         public InputManager inputManager;
-        public HealthSystem chimeraHealth;
-        public ChimeraStats chimeraStats;
-        public ChimeraCooldowns chimeraCooldowns;
-        public ChimeraMovement chimeraMovement;
-        public ChimeraCursorPointer chimeraCursor;
-        public ChimeraRammingHitbox chimeraRammingHitbox;
+        public HealthSystem health;
+        public ChimeraStats stats;
+        public ChimeraCooldowns cooldowns;
+        public ChimeraMovement movement;
+        public ChimeraCursorPointer cursor;
+        public ChimeraRammingHitbox rammingHitbox;
 
         //public ChimeraUI chimeraUI;
         [SerializeField]
@@ -39,11 +39,10 @@ namespace Chimera
         private void Awake()
         {
             inputManager = GetComponent<InputManager>();
-            chimeraHealth = GetComponent<HealthSystem>();
-            chimeraStats = GetComponent<ChimeraStats>();
-            chimeraCooldowns = GetComponent<ChimeraCooldowns>();
-            chimeraMovement = GetComponent<ChimeraMovement>();
-            //chimeraUI = GameObject.FindGameObjectWithTag("ChimeraUI").GetComponent<ChimeraUI>();
+            health = GetComponent<HealthSystem>();
+            stats = GetComponent<ChimeraStats>();
+            cooldowns = GetComponent<ChimeraCooldowns>();
+            movement = GetComponent<ChimeraMovement>();
         }
 
         private void Start()

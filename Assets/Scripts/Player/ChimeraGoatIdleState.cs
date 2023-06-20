@@ -29,7 +29,7 @@ namespace Chimera
         {
             if (
                 stateMachine.inputManager.isPrimaryAbilityHeld
-                && (stateMachine.chimeraCooldowns.ramCooldown <= 0f)
+                && (stateMachine.cooldowns.ramCooldown <= 0f)
             )
             {
                 stateMachine.SwitchState(new ChimeraGoatRamState(stateMachine));
@@ -39,7 +39,7 @@ namespace Chimera
 
         private void WailAbility()
         {
-            if (stateMachine.chimeraCooldowns.wailCooldown <= 0f)
+            if (stateMachine.cooldowns.wailCooldown <= 0f)
             {
                 stateMachine.SwitchState(new ChimeraGoatWailState(stateMachine));
             }

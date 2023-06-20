@@ -18,7 +18,7 @@ namespace Chimera
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,
-                stateMachine.chimeraStats.wailRange,
+                stateMachine.stats.wailRange,
                 stateMachine.enemyLayerMask
             );
 
@@ -29,7 +29,7 @@ namespace Chimera
                     continue;
                 }
 
-                healthSystem.TakeDamage(stateMachine.chimeraStats.wailDamage);
+                healthSystem.TakeDamage(stateMachine.stats.wailDamage);
                 //Slow enemy
             }
             stateTimer = stateTime;
@@ -37,7 +37,7 @@ namespace Chimera
 
         public override void Exit()
         {
-            stateMachine.chimeraCooldowns.SetWailCooldown();
+            stateMachine.cooldowns.SetWailCooldown();
         }
 
         public override void Tick(float deltaTime)

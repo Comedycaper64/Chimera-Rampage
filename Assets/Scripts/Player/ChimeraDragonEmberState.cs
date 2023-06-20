@@ -23,16 +23,16 @@ namespace Chimera
                 )
                 .GetComponent<EmberProjectile>();
             ember.SetupProjectile(
-                stateMachine.chimeraCursor.GetMouseWorldPosition(),
-                stateMachine.chimeraStats.emberDamage,
-                stateMachine.chimeraStats.emberAreaOfEffect
+                stateMachine.cursor.GetMouseWorldPosition(),
+                stateMachine.stats.emberDamage,
+                stateMachine.stats.emberAreaOfEffect
             );
             stateTimer = stateTime;
         }
 
         public override void Exit()
         {
-            stateMachine.chimeraCooldowns.SetEmberCooldown();
+            stateMachine.cooldowns.SetEmberCooldown();
         }
 
         public override void Tick(float deltaTime)

@@ -19,6 +19,12 @@ public class HealthSystem : MonoBehaviour
         health = maxHealth;
     }
 
+    public void SetMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        health = maxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
         health = Mathf.Max(0, health - damage);
@@ -45,6 +51,6 @@ public class HealthSystem : MonoBehaviour
     private void Die()
     {
         OnDeath?.Invoke();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

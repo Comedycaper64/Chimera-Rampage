@@ -29,7 +29,7 @@ namespace Chimera
         {
             if (
                 stateMachine.inputManager.isPrimaryAbilityHeld
-                && (stateMachine.chimeraCooldowns.swipeCooldown <= 0f)
+                && (stateMachine.cooldowns.swipeCooldown <= 0f)
             )
             {
                 stateMachine.SwitchState(new ChimeraLionSwipeState(stateMachine));
@@ -39,7 +39,7 @@ namespace Chimera
 
         private void DevourAbility()
         {
-            if (stateMachine.chimeraCooldowns.devourCooldown <= 0f)
+            if (stateMachine.cooldowns.devourCooldown <= 0f)
             {
                 stateMachine.SwitchState(new ChimeraLionDevourState(stateMachine));
             }

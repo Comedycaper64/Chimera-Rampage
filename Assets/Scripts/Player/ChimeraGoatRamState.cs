@@ -16,23 +16,23 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.goatHeadAnimator.SetTrigger("ram");
-            stateMachine.chimeraMovement.ToggleMove(false);
-            movementDirection = stateMachine.chimeraCursor.GetCursorDirection();
-            stateMachine.chimeraRammingHitbox.ToggleHitbox(
+            stateMachine.movement.ToggleMove(false);
+            movementDirection = stateMachine.cursor.GetCursorDirection();
+            stateMachine.rammingHitbox.ToggleHitbox(
                 true,
-                stateMachine.chimeraStats.ramDamage,
-                stateMachine.chimeraStats.ramKnockback,
-                stateMachine.chimeraStats.ramHitboxSize
+                stateMachine.stats.ramDamage,
+                stateMachine.stats.ramKnockback,
+                stateMachine.stats.ramHitboxSize
             );
-            stateTime = stateMachine.chimeraStats.ramDashTime;
+            stateTime = stateMachine.stats.ramDashTime;
             stateTimer = stateTime;
         }
 
         public override void Exit()
         {
-            stateMachine.chimeraMovement.ToggleMove(true);
-            stateMachine.chimeraRammingHitbox.ToggleHitbox(false);
-            stateMachine.chimeraCooldowns.SetRamCooldown();
+            stateMachine.movement.ToggleMove(true);
+            stateMachine.rammingHitbox.ToggleHitbox(false);
+            stateMachine.cooldowns.SetRamCooldown();
         }
 
         public override void Tick(float deltaTime)
@@ -41,10 +41,7 @@ namespace Chimera
 
             stateMachine.transform.position +=
                 movementDirection
-                * (
-                    stateMachine.chimeraStats.ramDashDistance
-                    / stateMachine.chimeraStats.ramDashTime
-                )
+                * (stateMachine.stats.ramDashDistance / stateMachine.stats.ramDashTime)
                 * deltaTime;
 
             if (stateTimer <= 0f)

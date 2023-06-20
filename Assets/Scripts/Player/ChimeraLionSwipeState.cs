@@ -18,10 +18,10 @@ namespace Chimera
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,
-                stateMachine.chimeraStats.swipeRange,
+                stateMachine.stats.swipeRange,
                 stateMachine.enemyLayerMask
             );
-            Vector2 cursorDirection = stateMachine.chimeraCursor.GetCursorDirection();
+            Vector2 cursorDirection = stateMachine.cursor.GetCursorDirection();
             //List<HealthSystem> unitsToDamage = new List<HealthSystem>();
             foreach (Collider2D collider in colliders)
             {
@@ -34,10 +34,10 @@ namespace Chimera
                 ).normalized;
                 if (
                     Vector2.Dot(cursorDirection, colliderDirectionFromChimera)
-                    > (1f - stateMachine.chimeraStats.swipeArc)
+                    > (1f - stateMachine.stats.swipeArc)
                 )
                 {
-                    healthSystem.TakeDamage(stateMachine.chimeraStats.swipeDamage);
+                    healthSystem.TakeDamage(stateMachine.stats.swipeDamage);
                 }
             }
             stateTimer = stateTime;
@@ -45,7 +45,7 @@ namespace Chimera
 
         public override void Exit()
         {
-            stateMachine.chimeraCooldowns.SetSwipeCooldown();
+            stateMachine.cooldowns.SetSwipeCooldown();
         }
 
         public override void Tick(float deltaTime)

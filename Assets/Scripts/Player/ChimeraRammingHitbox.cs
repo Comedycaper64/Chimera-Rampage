@@ -37,6 +37,14 @@ namespace Chimera
             )
             {
                 healthSystem.TakeDamage(damage);
+
+                //Idk what's going on with forced not working
+                // Vector2 directionToHitUnit = (
+                //     other.transform.position - transform.position
+                // ).normalized;
+                // Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+                // //rb.velocity = -directionToHitUnit * knockback;
+                // rb.AddForce(directionToHitUnit * knockback, ForceMode2D.Impulse);
             }
         }
     }

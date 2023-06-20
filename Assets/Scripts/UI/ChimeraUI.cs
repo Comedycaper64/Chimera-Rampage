@@ -41,13 +41,13 @@ namespace Chimera
                 .GetComponent<ChimeraStateMachine>();
             SetHealth(1f);
             chimera.OnHeadChanged += ChimeraStateMachine_OnHeadChanged;
-            chimera.chimeraHealth.OnNewHealth += HealthSystem_OnNewHealth;
+            chimera.health.OnNewHealth += HealthSystem_OnNewHealth;
         }
 
         private void OnDisable()
         {
             chimera.OnHeadChanged -= ChimeraStateMachine_OnHeadChanged;
-            chimera.chimeraHealth.OnNewHealth -= HealthSystem_OnNewHealth;
+            chimera.health.OnNewHealth -= HealthSystem_OnNewHealth;
         }
 
         public void SetHealth(float newHealth)

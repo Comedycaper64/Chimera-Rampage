@@ -30,7 +30,7 @@ namespace Chimera
         {
             if (
                 stateMachine.inputManager.isPrimaryAbilityHeld
-                && (stateMachine.chimeraCooldowns.emberCooldown <= 0f)
+                && (stateMachine.cooldowns.emberCooldown <= 0f)
             )
             {
                 stateMachine.SwitchState(new ChimeraDragonEmberState(stateMachine));
@@ -40,7 +40,7 @@ namespace Chimera
 
         private void FireBreathAbility()
         {
-            if (stateMachine.chimeraCooldowns.breathCooldown <= 0f)
+            if (stateMachine.cooldowns.breathCooldown <= 0f)
             {
                 stateMachine.SwitchState(new ChimeraDragonFireBreathState(stateMachine));
             }
