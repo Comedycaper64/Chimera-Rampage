@@ -9,27 +9,35 @@ public class HealthSystem : MonoBehaviour
 
     public Action OnDeath;
 
-    [SerializeField]
-    private int maxHealth;
+    private float maxHealth;
 
-    private int health;
+    private float health;
+
+    public bool isPlayer;
+
+    public bool isInvincible = false;
 
     private void Awake()
     {
         health = maxHealth;
     }
 
-    public void SetMaxHealth(int maxHealth)
+    public void SetMaxHealth(float maxHealth)
     {
         this.maxHealth = maxHealth;
         health = maxHealth;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
+        if (isInvincible)
+        {
+            return;
+        }
+
         health = Mathf.Max(0, health - damage);
 
-        OnNewHealth?.Invoke(this, (float)health / maxHealth);
+        OnNewHealth?.Invoke(this, health / maxHealth);
 
         if (health == 0)
         {
@@ -37,13 +45,13 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    public void Heal(int amountToHeal)
+    public void Heal(float amountToHeal)
     {
         health = Mathf.Min(maxHealth, health + amountToHeal);
-        OnNewHealth?.Invoke(this, (float)health / maxHealth);
+        OnNewHealth?.Invoke(this, health / maxHealth);
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }

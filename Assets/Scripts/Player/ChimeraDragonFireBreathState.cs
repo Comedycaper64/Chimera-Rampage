@@ -40,6 +40,7 @@ namespace Chimera
                     healthSystem.TakeDamage(stateMachine.stats.flameBreathDamage);
                 }
             }
+            stateMachine.fireBreath.Play();
             stateTimer = stateTime;
         }
 

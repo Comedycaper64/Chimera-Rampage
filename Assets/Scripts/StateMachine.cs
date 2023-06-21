@@ -18,4 +18,6 @@ public abstract class StateMachine : MonoBehaviour
         currentState = newState;
         currentState?.Enter();
     }
+
+    public virtual void WailDebuff(float debuffTime) { }
 }

@@ -255,4 +255,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emberVisual: {fileID: 3683329128476197101}
   areaOfEffectCollider: {fileID: 3683329127799536695}
-  projectileSpeed: 10
+  projectileSpeed: 20

@@ -24,6 +24,7 @@ namespace Chimera
                 stateMachine.stats.ramKnockback,
                 stateMachine.stats.ramHitboxSize
             );
+            stateMachine.health.isInvincible = true;
             stateTime = stateMachine.stats.ramDashTime;
             stateTimer = stateTime;
         }
@@ -33,6 +34,7 @@ namespace Chimera
             stateMachine.movement.ToggleMove(true);
             stateMachine.rammingHitbox.ToggleHitbox(false);
             stateMachine.cooldowns.SetRamCooldown();
+            stateMachine.health.isInvincible = false;
         }
 
         public override void Tick(float deltaTime)

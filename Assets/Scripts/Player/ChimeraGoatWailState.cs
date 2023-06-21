@@ -30,6 +30,9 @@ namespace Chimera
                 }
 
                 healthSystem.TakeDamage(stateMachine.stats.wailDamage);
+                healthSystem
+                    .GetComponent<StateMachine>()
+                    .WailDebuff(stateMachine.stats.wailDebuffDuration);
                 //Slow enemy
             }
             stateTimer = stateTime;

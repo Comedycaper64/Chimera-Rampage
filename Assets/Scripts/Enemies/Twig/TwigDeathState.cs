@@ -13,10 +13,14 @@ namespace Enemies.Twig
         {
             //Trigger death animation
             stateMachine.animator.SetTrigger("die");
+            stateMachine.isDead = true;
             stateMachine.bodyCollider.enabled = false;
         }
 
-        public override void Exit() { }
+        public override void Exit()
+        {
+            stateMachine.isDead = false;
+        }
 
         public override void Tick(float deltaTime) { }
     }

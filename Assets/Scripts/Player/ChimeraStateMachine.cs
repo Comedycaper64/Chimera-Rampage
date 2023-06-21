@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Chimera
 {
@@ -17,6 +18,10 @@ namespace Chimera
         public ChimeraCursorPointer cursor;
         public ChimeraRammingHitbox rammingHitbox;
 
+        [Header("Visual Effects")]
+        public VisualEffect fireBreath;
+
+        [Header("Animators")]
         //public ChimeraUI chimeraUI;
         [SerializeField]
         public Animator bodyAnimator;
@@ -30,6 +35,7 @@ namespace Chimera
         [SerializeField]
         public Animator goatHeadAnimator;
 
+        [Header("Misc")]
         public ChimeraHead activeHead;
         public LayerMask enemyLayerMask;
 
@@ -43,6 +49,7 @@ namespace Chimera
             stats = GetComponent<ChimeraStats>();
             cooldowns = GetComponent<ChimeraCooldowns>();
             movement = GetComponent<ChimeraMovement>();
+            health.SetMaxHealth(stats.health);
         }
 
         private void Start()

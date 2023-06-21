@@ -46,10 +46,12 @@ namespace Chimera
 
         [Header("Wail Ability")]
         public int wailDamage;
+        public float wailDebuffDuration;
         public float wailRange;
         public float wailCooldown;
 
         [Header("Misc")]
         public float movementSpeed;
+        public int health;
     }
 }

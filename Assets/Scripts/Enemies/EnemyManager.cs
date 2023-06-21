@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemies.Dryad;
 using Enemies.Twig;
 using UnityEngine;
 
@@ -20,7 +21,6 @@ public class EnemyManager : MonoBehaviour
 
     private List<GameObject> unitSpool = new List<GameObject>();
 
-    [SerializeField]
     private int unitLimit;
 
     private int aliveUnits;
@@ -39,28 +39,37 @@ public class EnemyManager : MonoBehaviour
     private float dryadSpawnChance;
     private float myconidSpawnChance;
 
-    public void BeginEncounter(
-        int twigs,
-        int dryads,
-        int myconids,
-        int encounterUnitLimit,
-        Vector2 areaMin,
-        Vector2 areaMax
-    )
+    [SerializeField]
+    private EnemyEncounter testEncounter;
+
+    private void Start()
+    {
+        TwigStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
+        DryadStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
+        BeginEncounter(testEncounter);
+    }
+
+    private void OnDisable()
+    {
+        TwigStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
+        DryadStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
+    }
+
+    public void BeginEncounter(EnemyEncounter encounter)
     {
         spawnedTwigs = 0;
         spawnedDryads = 0;
         spawnedMyconids = 0;
 
-        encounterTwigs = twigs;
-        encounterDryads = dryads;
-        encounterMyconids = myconids;
-        unitLimit = encounterUnitLimit;
+        encounterTwigs = encounter.twigs;
+        encounterDryads = encounter.dryads;
+        encounterMyconids = encounter.myconids;
+        unitLimit = encounter.encounterUnitLimit;
 
         CalculateSpawnChances();
 
-        spawnAreaMin = areaMin;
-        spawnAreaMax = areaMax;
+        spawnAreaMin = encounter.areaMin;
+        spawnAreaMax = encounter.areaMax;
 
         StartCoroutine(SpawnEnemies());
     }
@@ -70,6 +79,8 @@ public class EnemyManager : MonoBehaviour
         int encounterTotal =
             (encounterTwigs + encounterDryads + encounterMyconids)
             - (spawnedTwigs + spawnedDryads + spawnedMyconids);
+
+        //Debug.Log(encounterTotal);
         if (encounterTotal <= 0)
         {
             return false;
@@ -80,6 +91,32 @@ public class EnemyManager : MonoBehaviour
         return true;
     }
 
+    private void SpawnUnit(GameObject unitToSpawn, EnemyType unitType)
+    {
+        GameObject spawnedUnit = Instantiate(unitToSpawn, gameObject.transform);
+        spawnedUnit.transform.position = new Vector3(
+            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+            Random.Range(spawnAreaMin.y, spawnAreaMax.y),
+            0f
+        );
+        unitSpool.Add(spawnedUnit);
+
+        switch (unitType)
+        {
+            case EnemyType.twig:
+                spawnedTwigs++;
+                break;
+            case EnemyType.dryad:
+                spawnedDryads++;
+                break;
+            case EnemyType.myconid:
+                spawnedMyconids++;
+                break;
+        }
+
+        //Debug.Log("Spawn New Unit");
+    }
+
     private IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(timeBetweenSpawns);
@@ -87,6 +124,7 @@ public class EnemyManager : MonoBehaviour
         if (aliveUnits >= unitLimit)
         {
             StartCoroutine(SpawnEnemies());
+            //Debug.Log("Waiting");
             yield break;
         }
 
@@ -99,14 +137,14 @@ public class EnemyManager : MonoBehaviour
 
         GameObject unitToSpawn;
         EnemyType unitType;
-        int randomNumber = Random.Range(1, 101);
-        if (randomNumber <= (twigSpawnChance * 100f))
+        float randomNumber = Random.Range(0f, 1f);
+        if (randomNumber <= twigSpawnChance)
         {
             //spawn twig
             unitToSpawn = twigPrefab;
             unitType = EnemyType.twig;
         }
-        else if (randomNumber <= ((twigSpawnChance + dryadSpawnChance) * 100f))
+        else if (randomNumber <= (twigSpawnChance + dryadSpawnChance))
         {
             //spawn dryad
             unitToSpawn = dryadPrefab;
@@ -121,32 +159,67 @@ public class EnemyManager : MonoBehaviour
 
         if (unitSpool.Count < unitLimit)
         {
-            GameObject spawnedUnit = Instantiate(unitToSpawn, gameObject.transform);
-            spawnedUnit.transform.position = new Vector3(
-                Random.Range(spawnAreaMin.x, spawnAreaMax.x),
-                Random.Range(spawnAreaMin.y, spawnAreaMax.y),
-                0f
-            );
-            unitSpool.Add(spawnedUnit);
-
-            switch (unitType)
-            {
-                case EnemyType.twig:
-                    spawnedTwigs++;
-                    break;
-                case EnemyType.dryad:
-                    spawnedDryads++;
-                    break;
-                case EnemyType.myconid:
-                    spawnedMyconids++;
-                    break;
-            }
+            SpawnUnit(unitToSpawn, unitType);
         }
         else
         {
             bool unitFound = false;
             int i = 0;
-            while (!unitFound) { }
+            while (!unitFound)
+            {
+                GameObject tempUnit = unitSpool[i];
+                if (
+                    (unitType == EnemyType.twig)
+                    && tempUnit.TryGetComponent<TwigStateMachine>(out TwigStateMachine twig)
+                    && twig.isDead
+                )
+                {
+                    unitFound = true;
+                    spawnedTwigs++;
+                    twig.RespawnTwig(
+                        new Vector2(
+                            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                            Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+                        )
+                    );
+                }
+                else if (
+                    (unitType == EnemyType.dryad)
+                    && tempUnit.TryGetComponent<DryadStateMachine>(out DryadStateMachine dryad)
+                    && dryad.isDead
+                )
+                {
+                    unitFound = true;
+                    spawnedDryads++;
+                    dryad.RespawnDryad(
+                        new Vector2(
+                            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                            Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+                        )
+                    );
+                }
+                // else if ((unitType == EnemyType.myconid) && tempUnit.TryGetComponent<MyconidStateMachine>(out TwigStateMachine twig))
+                // {
+
+                // }
+                else
+                {
+                    i++;
+                    if (i >= unitSpool.Count)
+                    {
+                        Debug.Log("Unit not found");
+                        SpawnUnit(unitToSpawn, unitType);
+                        break;
+                    }
+                }
+            }
         }
+        aliveUnits++;
+        StartCoroutine(SpawnEnemies());
+    }
+
+    private void OnAnyEnemyDeath()
+    {
+        aliveUnits--;
     }
 }
