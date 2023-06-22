@@ -46,6 +46,11 @@ namespace Enemies.Myconid
 
         public override void WailDebuff(float debuffTime)
         {
+            if (isDead)
+            {
+                return;
+            }
+
             StartCoroutine(DebuffCloud(debuffTime));
         }
 

@@ -26,6 +26,11 @@ public class DryadProjectile : MonoBehaviour
         this.direction = direction;
     }
 
+    public void DestroyProjectile()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (
@@ -34,7 +39,7 @@ public class DryadProjectile : MonoBehaviour
         )
         {
             healthSystem.TakeDamage(damage);
-            Destroy(gameObject);
+            DestroyProjectile();
         }
     }
 }

@@ -23,6 +23,11 @@ namespace Enemies.Twig
 
         public override void Tick(float deltaTime)
         {
+            // if (!stateMachine.canMove)
+            // {
+            //     return;
+            // }
+
             Vector3 directionToMove = (
                 stateMachine.playerHealth.transform.position - stateMachine.transform.position
             ).normalized;

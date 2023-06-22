@@ -13,6 +13,7 @@ namespace Enemies.Twig
         public Collider2D bodyCollider;
         public Animator animator;
         public bool isDead;
+
         public static Action OnAnyEnemyDeath;
 
         private void Awake()
@@ -48,13 +49,27 @@ namespace Enemies.Twig
             StartCoroutine(DebuffSpeed(debuffTime));
         }
 
-        public IEnumerator DebuffSpeed(float debuffTime)
+        private IEnumerator DebuffSpeed(float debuffTime)
         {
             float originalSpeed = stats.movementSpeed;
             stats.movementSpeed = stats.movementSpeed / 2;
             yield return new WaitForSeconds(debuffTime);
             stats.movementSpeed = originalSpeed;
         }
+
+        // public void Knockback(Vector2 knockBackDirection, float knockBackForce)
+        // {
+        //     StartCoroutine(KnockbackCoroutine(knockBackDirection, knockBackForce));
+        // }
+
+        // private IEnumerator KnockbackCoroutine(Vector2 knockbackDirection, float knockBackForce)
+        // {
+        //     //canMove = false;
+        //     GetComponent<Rigidbody2D>()
+        //         .AddForce(knockbackDirection * knockBackForce, ForceMode2D.Impulse);
+        //     yield return new WaitForSeconds(1f);
+        //     //canMove = true;
+        // }
 
         private void Health_OnDeath()
         {

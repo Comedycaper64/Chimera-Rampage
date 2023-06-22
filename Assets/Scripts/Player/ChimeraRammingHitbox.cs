@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemies.Twig;
 using UnityEngine;
 
 namespace Chimera
@@ -25,6 +26,7 @@ namespace Chimera
         {
             rammingCollider.enabled = toggle;
             this.damage = damage;
+            this.knockback = knockback;
             rammingCollider.radius = colliderArea;
         }
 
@@ -38,13 +40,19 @@ namespace Chimera
             {
                 healthSystem.TakeDamage(damage);
 
-                //Idk what's going on with forced not working
-                // Vector2 directionToHitUnit = (
-                //     other.transform.position - transform.position
-                // ).normalized;
-                // Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
-                // //rb.velocity = -directionToHitUnit * knockback;
-                // rb.AddForce(directionToHitUnit * knockback, ForceMode2D.Impulse);
+                // if (other.TryGetComponent<TwigStateMachine>(out TwigStateMachine stateMachine))
+                // {
+                //     Vector2 directionToHitUnit = (
+                //         other.transform.position - transform.position
+                //     ).normalized;
+                //     stateMachine.Knockback(directionToHitUnit, knockback);
+                // }
+
+                Vector2 directionToHitUnit = (
+                    other.transform.position - transform.position
+                ).normalized;
+                Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+                rb.AddForce(directionToHitUnit * knockback, ForceMode2D.Impulse);
             }
         }
     }

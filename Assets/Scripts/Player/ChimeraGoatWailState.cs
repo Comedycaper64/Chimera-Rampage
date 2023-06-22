@@ -24,6 +24,12 @@ namespace Chimera
 
             foreach (Collider2D collider in colliders)
             {
+                if (collider.TryGetComponent<DryadProjectile>(out DryadProjectile projectile))
+                {
+                    projectile.DestroyProjectile();
+                    continue;
+                }
+
                 if (!collider.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
                 {
                     continue;

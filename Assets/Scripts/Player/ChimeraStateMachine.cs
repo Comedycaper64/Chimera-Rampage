@@ -20,6 +20,8 @@ namespace Chimera
 
         [Header("Visual Effects")]
         public VisualEffect fireBreath;
+        public VisualEffect clawSwipe;
+        public VisualEffect goatRam;
 
         [Header("Animators")]
         //public ChimeraUI chimeraUI;

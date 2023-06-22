@@ -6,7 +6,7 @@ namespace Chimera
 {
     public class ChimeraDragonFireBreathState : ChimeraBaseState
     {
-        private float stateTime = 1f;
+        private float stateTime = 1.5f;
         private float stateTimer;
 
         public ChimeraDragonFireBreathState(ChimeraStateMachine stateMachine)
@@ -15,6 +15,17 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.dragonHeadAnimator.SetTrigger("flameBreath");
+            stateMachine.fireBreath.Play();
+            stateTimer = stateTime;
+        }
+
+        public override void Exit()
+        {
+            stateMachine.cooldowns.SetBreathCooldown();
+        }
+
+        public override void Tick(float deltaTime)
+        {
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,
@@ -37,20 +48,9 @@ namespace Chimera
                     > (1f - stateMachine.stats.flameBreathAreaArc)
                 )
                 {
-                    healthSystem.TakeDamage(stateMachine.stats.flameBreathDamage);
+                    healthSystem.TakeDamage(stateMachine.stats.flameBreathDamage * deltaTime);
                 }
             }
-            stateMachine.fireBreath.Play();
-            stateTimer = stateTime;
-        }
-
-        public override void Exit()
-        {
-            stateMachine.cooldowns.SetBreathCooldown();
-        }
-
-        public override void Tick(float deltaTime)
-        {
             stateTimer -= deltaTime;
             if (stateTimer <= 0f)
             {
