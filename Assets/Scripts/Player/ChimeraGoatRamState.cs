@@ -16,7 +16,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.goatHeadAnimator.SetTrigger("ram");
-            stateMachine.goatRam.Play();
+            stateMachine.goatRamVFX.Play();
             stateMachine.movement.ToggleMove(false);
             movementDirection = stateMachine.cursor.GetCursorDirection();
             stateMachine.rammingHitbox.ToggleHitbox(

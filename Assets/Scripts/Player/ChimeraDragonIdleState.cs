@@ -29,7 +29,8 @@ namespace Chimera
         public override void Tick(float deltaTime)
         {
             if (
-                stateMachine.inputManager.isPrimaryAbilityHeld
+                stateMachine.canUseAbilties
+                && stateMachine.inputManager.isPrimaryAbilityHeld
                 && (stateMachine.cooldowns.emberCooldown <= 0f)
             )
             {
@@ -40,7 +41,7 @@ namespace Chimera
 
         private void FireBreathAbility()
         {
-            if (stateMachine.cooldowns.breathCooldown <= 0f)
+            if (stateMachine.canUseAbilties && (stateMachine.cooldowns.breathCooldown <= 0f))
             {
                 stateMachine.SwitchState(new ChimeraDragonFireBreathState(stateMachine));
             }

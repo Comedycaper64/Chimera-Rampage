@@ -15,7 +15,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.dragonHeadAnimator.SetTrigger("flameBreath");
-            stateMachine.fireBreath.Play();
+            stateMachine.fireBreathVFX.Play();
             stateTimer = stateTime;
         }
 

@@ -15,7 +15,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.bodyAnimator.SetTrigger("swipe");
-            stateMachine.clawSwipe.Play();
+            stateMachine.clawSwipeVFX.Play();
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,

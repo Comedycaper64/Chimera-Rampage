@@ -19,9 +19,10 @@ namespace Chimera
         public ChimeraRammingHitbox rammingHitbox;
 
         [Header("Visual Effects")]
-        public VisualEffect fireBreath;
-        public VisualEffect clawSwipe;
-        public VisualEffect goatRam;
+        public VisualEffect fireBreathVFX;
+        public VisualEffect clawSwipeVFX;
+        public VisualEffect goatRamVFX;
+        public VisualEffect goatWailVFX;
 
         [Header("Animators")]
         //public ChimeraUI chimeraUI;
@@ -40,6 +41,7 @@ namespace Chimera
         [Header("Misc")]
         public ChimeraHead activeHead;
         public LayerMask enemyLayerMask;
+        public bool canUseAbilties = true;
 
         [Header("Instantiated Objects")]
         public GameObject emberProjectile;
@@ -58,11 +60,27 @@ namespace Chimera
         {
             //Event Subscriptions
             SwitchState(new ChimeraDragonIdleState(this));
+            DialogueManager.Instance.OnConversationStart += TurnOffMovement;
+            DialogueManager.Instance.OnConversationEnd += TurnOnMovement;
         }
 
         private void OnDisable()
         {
             //Event Unsubscriptions
+            DialogueManager.Instance.OnConversationStart -= TurnOffMovement;
+            DialogueManager.Instance.OnConversationEnd -= TurnOnMovement;
+        }
+
+        private void TurnOffMovement()
+        {
+            movement.ToggleMove(false);
+            canUseAbilties = false;
+        }
+
+        private void TurnOnMovement()
+        {
+            movement.ToggleMove(true);
+            canUseAbilties = true;
         }
     }
 }

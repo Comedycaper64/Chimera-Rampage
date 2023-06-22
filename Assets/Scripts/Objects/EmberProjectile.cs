@@ -8,6 +8,9 @@ public class EmberProjectile : MonoBehaviour
     private GameObject emberVisual;
 
     [SerializeField]
+    private GameObject emberExplosionVFX;
+
+    [SerializeField]
     private Collider2D areaOfEffectCollider;
 
     private int damage;
@@ -54,6 +57,13 @@ public class EmberProjectile : MonoBehaviour
                 health.TakeDamage(damage);
             }
         }
+
+        GameObject explosion = Instantiate(
+            emberExplosionVFX,
+            transform.position,
+            Quaternion.identity
+        );
+        Destroy(explosion, 1f);
         Destroy(gameObject);
     }
 }

@@ -28,7 +28,8 @@ namespace Chimera
         public override void Tick(float deltaTime)
         {
             if (
-                stateMachine.inputManager.isPrimaryAbilityHeld
+                stateMachine.canUseAbilties
+                && stateMachine.inputManager.isPrimaryAbilityHeld
                 && (stateMachine.cooldowns.ramCooldown <= 0f)
             )
             {
@@ -39,7 +40,7 @@ namespace Chimera
 
         private void WailAbility()
         {
-            if (stateMachine.cooldowns.wailCooldown <= 0f)
+            if (stateMachine.canUseAbilties && (stateMachine.cooldowns.wailCooldown <= 0f))
             {
                 stateMachine.SwitchState(new ChimeraGoatWailState(stateMachine));
             }

@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public Vector2 MovementValue { get; private set; }
     public bool isPrimaryAbilityHeld;
+    public event Action PrimaryAbilityEvent;
     public event Action SecondaryAbilityEvent;
     public event Action SwitchLeftEvent;
     public event Action SwitchRightEvent;
@@ -45,6 +46,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         if (context.performed)
         {
             isPrimaryAbilityHeld = true;
+            PrimaryAbilityEvent?.Invoke();
         }
         else if (context.canceled)
         {

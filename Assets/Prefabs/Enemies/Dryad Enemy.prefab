@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 125
-  attackDamage: 20
+  attackDamage: 10
   attackProjectileSpeed: 5
   attackIntervals: 2
   attackTiming: 0.627

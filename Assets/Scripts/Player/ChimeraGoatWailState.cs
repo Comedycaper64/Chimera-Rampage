@@ -15,6 +15,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.goatHeadAnimator.SetTrigger("wail");
+            stateMachine.goatWailVFX.Play();
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,

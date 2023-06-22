@@ -28,7 +28,8 @@ namespace Chimera
         public override void Tick(float deltaTime)
         {
             if (
-                stateMachine.inputManager.isPrimaryAbilityHeld
+                stateMachine.canUseAbilties
+                && stateMachine.inputManager.isPrimaryAbilityHeld
                 && (stateMachine.cooldowns.swipeCooldown <= 0f)
             )
             {
@@ -39,7 +40,7 @@ namespace Chimera
 
         private void DevourAbility()
         {
-            if (stateMachine.cooldowns.devourCooldown <= 0f)
+            if (stateMachine.canUseAbilties && (stateMachine.cooldowns.devourCooldown <= 0f))
             {
                 stateMachine.SwitchState(new ChimeraLionDevourState(stateMachine));
             }
