@@ -24,8 +24,10 @@ namespace Chimera
 
         private void Update()
         {
+            Vector2 movementValue = Vector2.zero;
             if (canMove)
             {
+                movementValue = inputManager.MovementValue;
                 transform.position +=
                     new Vector3(inputManager.MovementValue.x, inputManager.MovementValue.y)
                     * movementSpeed
@@ -39,10 +41,7 @@ namespace Chimera
                     visualTransform.eulerAngles = new Vector3(0, 0, 0);
                 }
             }
-            bodyAnimator.SetFloat(
-                "Speed",
-                Mathf.Abs(inputManager.MovementValue.x) + Mathf.Abs(inputManager.MovementValue.y)
-            );
+            bodyAnimator.SetFloat("Speed", Mathf.Abs(movementValue.x) + Mathf.Abs(movementValue.y));
         }
 
         public void ToggleMove(bool enable)

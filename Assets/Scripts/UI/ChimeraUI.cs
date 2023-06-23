@@ -29,7 +29,7 @@ namespace Chimera
         [SerializeField]
         private RectTransform rightUIAnchor;
 
-        private Vector3 reducedContainerScale = new Vector3(0.7f, 0.7f, 0.7f);
+        private Vector3 reducedContainerScale = new Vector3(0.8f, 0.8f, 0.8f);
 
         [SerializeField]
         private Slider healthBar;

@@ -14,6 +14,7 @@ public class EncounterArena : MonoBehaviour
 
     private void Awake()
     {
+        arenaCollider = GetComponent<Collider2D>();
         LevelManager.OnChimeraRespawn += EnableArena;
     }
 
@@ -32,6 +33,7 @@ public class EncounterArena : MonoBehaviour
 
     private void EnableArena()
     {
+        Debug.Log("ayaya");
         arenaCollider.enabled = true;
     }
 

@@ -40,12 +40,14 @@ public class EnemyManager : MonoBehaviour
     private float dryadSpawnChance;
     private float myconidSpawnChance;
 
+    private Coroutine encounterCoroutine;
+
     private void Start()
     {
         TwigStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
         DryadStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
         MyconidStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
-        LevelManager.OnChimeraRespawn += KillActiveEnemies;
+        LevelManager.OnChimeraRespawn += StopEncounter;
         EncounterArena.OnAnyEncounterStart += BeginEncounter;
         //BeginEncounter(testEncounter);
     }
@@ -55,7 +57,7 @@ public class EnemyManager : MonoBehaviour
         TwigStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
         DryadStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
         MyconidStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
-        LevelManager.OnChimeraRespawn -= KillActiveEnemies;
+        LevelManager.OnChimeraRespawn -= StopEncounter;
         EncounterArena.OnAnyEncounterStart -= BeginEncounter;
     }
 
@@ -64,6 +66,8 @@ public class EnemyManager : MonoBehaviour
         spawnedTwigs = 0;
         spawnedDryads = 0;
         spawnedMyconids = 0;
+
+        aliveUnits = 0;
 
         encounterTwigs = encounter.twigs;
         encounterDryads = encounter.dryads;
@@ -75,7 +79,7 @@ public class EnemyManager : MonoBehaviour
         spawnAreaMin = encounter.areaMin;
         spawnAreaMax = encounter.areaMax;
 
-        StartCoroutine(SpawnEnemies());
+        encounterCoroutine = StartCoroutine(SpawnEnemies());
     }
 
     private bool CalculateSpawnChances()
@@ -235,8 +239,13 @@ public class EnemyManager : MonoBehaviour
         StartCoroutine(SpawnEnemies());
     }
 
-    private void KillActiveEnemies()
+    private void StopEncounter()
     {
+        if (encounterCoroutine != null)
+        {
+            StopCoroutine(encounterCoroutine);
+        }
+
         foreach (GameObject enemy in unitSpool)
         {
             Destroy(enemy);

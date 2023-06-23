@@ -9,6 +9,9 @@ public class EnemyHealthUI : MonoBehaviour
     private Slider healthSlider;
     private HealthSystem enemyHealth;
 
+    [SerializeField]
+    private GameObject healthVisual;
+
     private void Awake()
     {
         healthSlider = GetComponent<Slider>();
@@ -22,8 +25,16 @@ public class EnemyHealthUI : MonoBehaviour
         enemyHealth.OnNewHealth -= ChangeSlider;
     }
 
-    private void ChangeSlider(object sender, float e)
+    private void ChangeSlider(object sender, float newValue)
     {
-        healthSlider.value = e;
+        healthSlider.value = newValue;
+        if (newValue <= 0f)
+        {
+            healthVisual.SetActive(false);
+        }
+        else
+        {
+            healthVisual.SetActive(true);
+        }
     }
 }

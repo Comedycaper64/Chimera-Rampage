@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803244d48e9d78945a948c273aecc3ee, type: 3}
+  m_Name: Encounter 4
+  m_EditorClassIdentifier: 
+  twigs: 50
+  dryads: 10
+  myconids: 5
+  encounterUnitLimit: 15
+  areaMin: {x: -108, y: -114.8, z: 0}
+  areaMax: {x: -49, y: -91.6, z: 0}
+  encounterNumber: 4

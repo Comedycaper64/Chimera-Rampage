@@ -12,6 +12,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject deathUI;
 
+    [SerializeField]
+    private List<LevelGate> levelGates = new List<LevelGate>();
+
     private void Start()
     {
         chimera = GameObject.FindGameObjectWithTag("Player").GetComponent<ChimeraStateMachine>();

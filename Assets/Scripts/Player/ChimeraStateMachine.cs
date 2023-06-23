@@ -72,6 +72,7 @@ namespace Chimera
             LevelManager.OnChimeraRespawn += Respawn;
             DialogueManager.Instance.OnConversationStart += TurnOffMovement;
             DialogueManager.Instance.OnConversationEnd += TurnOnMovement;
+            TurnOffMovement();
         }
 
         private void OnDisable()
@@ -91,12 +92,14 @@ namespace Chimera
 
         public void SetRespawnPoint(Vector3 respawnPoint)
         {
+            //Debug.Log(respawnPoint);
             this.respawnPoint = respawnPoint;
         }
 
         public void Respawn()
         {
             transform.position = respawnPoint;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             health.Heal(999f);
             TurnOnMovement();
         }
@@ -107,7 +110,7 @@ namespace Chimera
             canUseAbilties = false;
         }
 
-        private void TurnOnMovement()
+        public void TurnOnMovement()
         {
             movement.ToggleMove(true);
             canUseAbilties = true;
