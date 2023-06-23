@@ -16,6 +16,11 @@ namespace Chimera
         {
             stateMachine.bodyAnimator.SetTrigger("swipe");
             stateMachine.clawSwipeVFX.Play();
+            AudioSource.PlayClipAtPoint(
+                stateMachine.lionSwipeSFX,
+                stateMachine.transform.position,
+                SoundManager.Instance.GetSoundEffectVolume()
+            );
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,

@@ -17,6 +17,11 @@ namespace Chimera
         {
             stateMachine.goatHeadAnimator.SetTrigger("ram");
             stateMachine.goatRamVFX.Play();
+            AudioSource.PlayClipAtPoint(
+                stateMachine.goatRamSFX,
+                stateMachine.transform.position,
+                SoundManager.Instance.GetSoundEffectVolume()
+            );
             stateMachine.movement.ToggleMove(false);
             movementDirection = stateMachine.cursor.GetCursorDirection();
             stateMachine.rammingHitbox.ToggleHitbox(
@@ -32,7 +37,10 @@ namespace Chimera
 
         public override void Exit()
         {
-            stateMachine.movement.ToggleMove(true);
+            if (stateMachine.canUseAbilties)
+            {
+                stateMachine.movement.ToggleMove(true);
+            }
             stateMachine.rammingHitbox.ToggleHitbox(false);
             stateMachine.cooldowns.SetRamCooldown();
             stateMachine.health.isInvincible = false;

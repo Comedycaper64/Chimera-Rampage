@@ -24,8 +24,15 @@ namespace Chimera
         public VisualEffect goatRamVFX;
         public VisualEffect goatWailVFX;
 
+        [Header("Sound Effects")]
+        public AudioClip emberLaunchSFX;
+        public AudioClip fireBreathSFX;
+        public AudioClip goatRamSFX;
+        public AudioClip goatWailSFX;
+        public AudioClip lionDevourSFX;
+        public AudioClip lionSwipeSFX;
+
         [Header("Animators")]
-        //public ChimeraUI chimeraUI;
         [SerializeField]
         public Animator bodyAnimator;
 
@@ -42,6 +49,7 @@ namespace Chimera
         public ChimeraHead activeHead;
         public LayerMask enemyLayerMask;
         public bool canUseAbilties = true;
+        private Vector3 respawnPoint;
 
         [Header("Instantiated Objects")]
         public GameObject emberProjectile;
@@ -60,6 +68,8 @@ namespace Chimera
         {
             //Event Subscriptions
             SwitchState(new ChimeraDragonIdleState(this));
+            health.OnDeath += Die;
+            LevelManager.OnChimeraRespawn += Respawn;
             DialogueManager.Instance.OnConversationStart += TurnOffMovement;
             DialogueManager.Instance.OnConversationEnd += TurnOnMovement;
         }
@@ -67,8 +77,28 @@ namespace Chimera
         private void OnDisable()
         {
             //Event Unsubscriptions
+            health.OnDeath -= Die;
+            LevelManager.OnChimeraRespawn -= Respawn;
             DialogueManager.Instance.OnConversationStart -= TurnOffMovement;
             DialogueManager.Instance.OnConversationEnd -= TurnOnMovement;
+        }
+
+        private void Die()
+        {
+            //Trigger death toggle in body animator
+            TurnOffMovement();
+        }
+
+        public void SetRespawnPoint(Vector3 respawnPoint)
+        {
+            this.respawnPoint = respawnPoint;
+        }
+
+        public void Respawn()
+        {
+            transform.position = respawnPoint;
+            health.Heal(999f);
+            TurnOnMovement();
         }
 
         private void TurnOffMovement()

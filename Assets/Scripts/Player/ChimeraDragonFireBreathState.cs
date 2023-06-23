@@ -16,6 +16,11 @@ namespace Chimera
         {
             stateMachine.dragonHeadAnimator.SetTrigger("flameBreath");
             stateMachine.fireBreathVFX.Play();
+            AudioSource.PlayClipAtPoint(
+                stateMachine.fireBreathSFX,
+                stateMachine.transform.position,
+                SoundManager.Instance.GetSoundEffectVolume()
+            );
             stateTimer = stateTime;
         }
 

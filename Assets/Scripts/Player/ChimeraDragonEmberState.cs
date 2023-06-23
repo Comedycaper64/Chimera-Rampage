@@ -27,6 +27,11 @@ namespace Chimera
                 stateMachine.stats.emberDamage,
                 stateMachine.stats.emberAreaOfEffect
             );
+            AudioSource.PlayClipAtPoint(
+                stateMachine.emberLaunchSFX,
+                stateMachine.transform.position,
+                SoundManager.Instance.GetSoundEffectVolume()
+            );
             stateTimer = stateTime;
         }
 

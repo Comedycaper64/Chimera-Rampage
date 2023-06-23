@@ -255,5 +255,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emberVisual: {fileID: 3683329128476197101}
   emberExplosionVFX: {fileID: 3062205974864291821, guid: 505e394b9258e2146821373afc9b6774, type: 3}
+  emberExplosionSFX: {fileID: 8300000, guid: 3c7464abb27879c40b0170c5b199b6eb, type: 3}
   areaOfEffectCollider: {fileID: 3683329127799536695}
   projectileSpeed: 20

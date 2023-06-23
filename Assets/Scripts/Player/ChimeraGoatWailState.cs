@@ -16,6 +16,11 @@ namespace Chimera
         {
             stateMachine.goatHeadAnimator.SetTrigger("wail");
             stateMachine.goatWailVFX.Play();
+            AudioSource.PlayClipAtPoint(
+                stateMachine.goatWailSFX,
+                stateMachine.transform.position,
+                SoundManager.Instance.GetSoundEffectVolume()
+            );
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,

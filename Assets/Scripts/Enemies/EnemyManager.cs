@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Enemies.Dryad;
+using Enemies.Myconid;
 using Enemies.Twig;
 using UnityEngine;
 
@@ -39,23 +40,26 @@ public class EnemyManager : MonoBehaviour
     private float dryadSpawnChance;
     private float myconidSpawnChance;
 
-    [SerializeField]
-    private EnemyEncounter testEncounter;
-
     private void Start()
     {
         TwigStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
         DryadStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
-        BeginEncounter(testEncounter);
+        MyconidStateMachine.OnAnyEnemyDeath += OnAnyEnemyDeath;
+        LevelManager.OnChimeraRespawn += KillActiveEnemies;
+        EncounterArena.OnAnyEncounterStart += BeginEncounter;
+        //BeginEncounter(testEncounter);
     }
 
     private void OnDisable()
     {
         TwigStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
         DryadStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
+        MyconidStateMachine.OnAnyEnemyDeath -= OnAnyEnemyDeath;
+        LevelManager.OnChimeraRespawn -= KillActiveEnemies;
+        EncounterArena.OnAnyEncounterStart -= BeginEncounter;
     }
 
-    public void BeginEncounter(EnemyEncounter encounter)
+    public void BeginEncounter(object sender, EnemyEncounter encounter)
     {
         spawnedTwigs = 0;
         spawnedDryads = 0;
@@ -198,10 +202,23 @@ public class EnemyManager : MonoBehaviour
                         )
                     );
                 }
-                // else if ((unitType == EnemyType.myconid) && tempUnit.TryGetComponent<MyconidStateMachine>(out TwigStateMachine twig))
-                // {
-
-                // }
+                else if (
+                    (unitType == EnemyType.myconid)
+                    && tempUnit.TryGetComponent<MyconidStateMachine>(
+                        out MyconidStateMachine myconid
+                    )
+                    && myconid.isDead
+                )
+                {
+                    unitFound = true;
+                    spawnedMyconids++;
+                    myconid.RespawnMyconid(
+                        new Vector2(
+                            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                            Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+                        )
+                    );
+                }
                 else
                 {
                     i++;
@@ -216,6 +233,15 @@ public class EnemyManager : MonoBehaviour
         }
         aliveUnits++;
         StartCoroutine(SpawnEnemies());
+    }
+
+    private void KillActiveEnemies()
+    {
+        foreach (GameObject enemy in unitSpool)
+        {
+            Destroy(enemy);
+        }
+        unitSpool = new List<GameObject>();
     }
 
     private void OnAnyEnemyDeath()

@@ -15,6 +15,11 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.lionHeadAnimator.SetTrigger("devour");
+            AudioSource.PlayClipAtPoint(
+                stateMachine.lionDevourSFX,
+                stateMachine.transform.position,
+                SoundManager.Instance.GetSoundEffectVolume()
+            );
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,

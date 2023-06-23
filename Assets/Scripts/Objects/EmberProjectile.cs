@@ -11,6 +11,9 @@ public class EmberProjectile : MonoBehaviour
     private GameObject emberExplosionVFX;
 
     [SerializeField]
+    private AudioClip emberExplosionSFX;
+
+    [SerializeField]
     private Collider2D areaOfEffectCollider;
 
     private int damage;
@@ -62,6 +65,11 @@ public class EmberProjectile : MonoBehaviour
             emberExplosionVFX,
             transform.position,
             Quaternion.identity
+        );
+        AudioSource.PlayClipAtPoint(
+            emberExplosionSFX,
+            transform.position,
+            SoundManager.Instance.GetSoundEffectVolume()
         );
         Destroy(explosion, 1f);
         Destroy(gameObject);
