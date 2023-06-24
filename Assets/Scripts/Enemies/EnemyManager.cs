@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Enemies.Dryad;
@@ -7,6 +8,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public static EventHandler<EnemyEncounter> OnEncounterFinish;
+
     [SerializeField]
     private GameObject twigPrefab;
 
@@ -39,6 +42,8 @@ public class EnemyManager : MonoBehaviour
     private float twigSpawnChance;
     private float dryadSpawnChance;
     private float myconidSpawnChance;
+
+    private EnemyEncounter currentEncounter;
 
     private Coroutine encounterCoroutine;
 
@@ -79,6 +84,8 @@ public class EnemyManager : MonoBehaviour
         spawnAreaMin = encounter.areaMin;
         spawnAreaMax = encounter.areaMax;
 
+        currentEncounter = encounter;
+
         encounterCoroutine = StartCoroutine(SpawnEnemies());
     }
 
@@ -103,8 +110,8 @@ public class EnemyManager : MonoBehaviour
     {
         GameObject spawnedUnit = Instantiate(unitToSpawn, gameObject.transform);
         spawnedUnit.transform.position = new Vector3(
-            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
-            Random.Range(spawnAreaMin.y, spawnAreaMax.y),
+            UnityEngine.Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+            UnityEngine.Random.Range(spawnAreaMin.y, spawnAreaMax.y),
             0f
         );
         unitSpool.Add(spawnedUnit);
@@ -145,7 +152,7 @@ public class EnemyManager : MonoBehaviour
 
         GameObject unitToSpawn;
         EnemyType unitType;
-        float randomNumber = Random.Range(0f, 1f);
+        float randomNumber = UnityEngine.Random.Range(0f, 1f);
         if (randomNumber <= twigSpawnChance)
         {
             //spawn twig
@@ -186,8 +193,8 @@ public class EnemyManager : MonoBehaviour
                     spawnedTwigs++;
                     twig.RespawnTwig(
                         new Vector2(
-                            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
-                            Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+                            UnityEngine.Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                            UnityEngine.Random.Range(spawnAreaMin.y, spawnAreaMax.y)
                         )
                     );
                 }
@@ -201,8 +208,8 @@ public class EnemyManager : MonoBehaviour
                     spawnedDryads++;
                     dryad.RespawnDryad(
                         new Vector2(
-                            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
-                            Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+                            UnityEngine.Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                            UnityEngine.Random.Range(spawnAreaMin.y, spawnAreaMax.y)
                         )
                     );
                 }
@@ -218,8 +225,8 @@ public class EnemyManager : MonoBehaviour
                     spawnedMyconids++;
                     myconid.RespawnMyconid(
                         new Vector2(
-                            Random.Range(spawnAreaMin.x, spawnAreaMax.x),
-                            Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+                            UnityEngine.Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                            UnityEngine.Random.Range(spawnAreaMin.y, spawnAreaMax.y)
                         )
                     );
                 }
@@ -256,5 +263,9 @@ public class EnemyManager : MonoBehaviour
     private void OnAnyEnemyDeath()
     {
         aliveUnits--;
+        if (aliveUnits <= 0)
+        {
+            OnEncounterFinish?.Invoke(this, currentEncounter);
+        }
     }
 }

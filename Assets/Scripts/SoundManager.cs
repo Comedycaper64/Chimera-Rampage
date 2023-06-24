@@ -19,6 +19,12 @@ public class SoundManager : MonoBehaviour
     [Range(0f, 1f)]
     private float musicVolume;
 
+    [SerializeField]
+    private float playbackSpeed;
+
+    [SerializeField]
+    private float musicQuietFactor;
+
     private ChimeraStateMachine stateMachine;
 
     private void Awake()
@@ -30,6 +36,7 @@ public class SoundManager : MonoBehaviour
             .GetComponent<ChimeraStateMachine>();
         StartCoroutine(PlayAudioSample());
         SetMusicVolume(1f);
+        audioSource.pitch = playbackSpeed;
     }
 
     private IEnumerator PlayAudioSample()
@@ -51,7 +58,7 @@ public class SoundManager : MonoBehaviour
         AudioClip sampleClip = sampleList[Random.Range(0, sampleList.Count)];
         audioSource.clip = sampleClip;
         audioSource.Play();
-        float sampleLength = sampleClip.length;
+        float sampleLength = sampleClip.length / playbackSpeed;
         yield return new WaitForSeconds(sampleLength);
         StartCoroutine(PlayAudioSample());
     }
@@ -73,7 +80,7 @@ public class SoundManager : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        musicVolume = volume / 2;
+        musicVolume = volume * musicQuietFactor;
         audioSource.volume = musicVolume;
     }
 }

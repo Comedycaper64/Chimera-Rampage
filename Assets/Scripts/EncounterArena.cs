@@ -33,13 +33,15 @@ public class EncounterArena : MonoBehaviour
 
     private void EnableArena()
     {
-        Debug.Log("ayaya");
         arenaCollider.enabled = true;
     }
 
     private void BeginEncounter()
     {
         arenaCollider.enabled = false;
-        OnAnyEncounterStart?.Invoke(this, encounter);
+        if (encounter)
+        {
+            OnAnyEncounterStart?.Invoke(this, encounter);
+        }
     }
 }

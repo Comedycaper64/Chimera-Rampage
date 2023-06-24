@@ -24,12 +24,19 @@ namespace Enemies.Twig
             bodyCollider = GetComponent<Collider2D>();
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
+            health.OnTakeDamage += Health_OnDamage;
             health.OnDeath += Health_OnDeath;
         }
 
         private void OnDisable()
         {
+            health.OnTakeDamage -= Health_OnDamage;
             health.OnDeath -= Health_OnDeath;
+        }
+
+        private void Health_OnDamage()
+        {
+            animator.SetTrigger("damage");
         }
 
         private void Start()

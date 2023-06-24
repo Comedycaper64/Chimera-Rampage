@@ -15,6 +15,7 @@ namespace Enemies.Myconid
         public MyconidMushroomCloud mushroomCloud;
         public bool isDead;
         public static Action OnAnyEnemyDeath;
+        private Coroutine debuffCoroutine;
 
         private void Awake()
         {
@@ -24,11 +25,13 @@ namespace Enemies.Myconid
             bodyCollider = GetComponent<Collider2D>();
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
+            health.OnTakeDamage += Health_OnTakeDamage;
             health.OnDeath += Health_OnDeath;
         }
 
         private void OnDisable()
         {
+            health.OnTakeDamage -= Health_OnTakeDamage;
             health.OnDeath -= Health_OnDeath;
         }
 
@@ -51,7 +54,7 @@ namespace Enemies.Myconid
                 return;
             }
 
-            StartCoroutine(DebuffCloud(debuffTime));
+            debuffCoroutine = StartCoroutine(DebuffCloud(debuffTime));
         }
 
         public IEnumerator DebuffCloud(float debuffTime)
@@ -61,9 +64,18 @@ namespace Enemies.Myconid
             mushroomCloud.ToggleCloud(true);
         }
 
+        private void Health_OnTakeDamage()
+        {
+            animator.SetTrigger("damage");
+        }
+
         private void Health_OnDeath()
         {
             OnAnyEnemyDeath?.Invoke();
+            if (debuffCoroutine != null)
+            {
+                StopCoroutine(debuffCoroutine);
+            }
             SwitchState(new MyconidDeathState(this));
         }
     }

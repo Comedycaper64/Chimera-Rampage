@@ -39,12 +39,25 @@ namespace Enemies.Dryad
                     stateMachine.playerHealth.transform.position - stateMachine.transform.position
                 ).normalized;
 
+                float zAngle = Vector3.Angle(Vector3.up, playerDirection);
+
+                Quaternion projectileRotation = Quaternion.Euler(0f, 0f, zAngle);
+
+                if (playerDirection.x >= 0f)
+                {
+                    projectileRotation.eulerAngles = new Vector3(
+                        projectileRotation.eulerAngles.x,
+                        projectileRotation.eulerAngles.y,
+                        -projectileRotation.eulerAngles.z
+                    );
+                }
+
                 //Instantiate and setup projectile
                 DryadProjectile projectile = GameObject
                     .Instantiate(
                         stateMachine.attackProjectile,
                         stateMachine.transform.position,
-                        Quaternion.identity
+                        projectileRotation
                     )
                     .GetComponent<DryadProjectile>();
                 projectile.SetupProjectile(

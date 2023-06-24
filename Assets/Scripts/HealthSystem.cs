@@ -7,6 +7,7 @@ public class HealthSystem : MonoBehaviour
 {
     public EventHandler<float> OnNewHealth;
 
+    public Action OnTakeDamage;
     public Action OnDeath;
 
     private float maxHealth;
@@ -16,6 +17,9 @@ public class HealthSystem : MonoBehaviour
     public bool isPlayer;
 
     public bool isInvincible = false;
+
+    [SerializeField]
+    private AudioClip damageSFX;
 
     private void Awake()
     {
@@ -39,9 +43,22 @@ public class HealthSystem : MonoBehaviour
 
         OnNewHealth?.Invoke(this, health / maxHealth);
 
+        // if (!isPlayer)
+        // {
+        //     AudioSource.PlayClipAtPoint(
+        //         damageSFX,
+        //         transform.position,
+        //         SoundManager.Instance.GetSoundEffectVolume()
+        //     );
+        // }
+
         if (health == 0)
         {
             Die();
+        }
+        else
+        {
+            OnTakeDamage?.Invoke();
         }
     }
 

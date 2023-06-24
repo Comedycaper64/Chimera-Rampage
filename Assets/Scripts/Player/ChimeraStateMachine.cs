@@ -23,6 +23,7 @@ namespace Chimera
         public VisualEffect clawSwipeVFX;
         public VisualEffect goatRamVFX;
         public VisualEffect goatWailVFX;
+        public VisualEffect lionDevourVFX;
 
         [Header("Sound Effects")]
         public AudioClip emberLaunchSFX;
@@ -68,6 +69,7 @@ namespace Chimera
         {
             //Event Subscriptions
             SwitchState(new ChimeraDragonIdleState(this));
+            health.OnTakeDamage += TakeDamage;
             health.OnDeath += Die;
             LevelManager.OnChimeraRespawn += Respawn;
             DialogueManager.Instance.OnConversationStart += TurnOffMovement;
@@ -78,15 +80,22 @@ namespace Chimera
         private void OnDisable()
         {
             //Event Unsubscriptions
+            health.OnTakeDamage -= TakeDamage;
             health.OnDeath -= Die;
             LevelManager.OnChimeraRespawn -= Respawn;
             DialogueManager.Instance.OnConversationStart -= TurnOffMovement;
             DialogueManager.Instance.OnConversationEnd -= TurnOnMovement;
         }
 
+        private void TakeDamage()
+        {
+            bodyAnimator.SetTrigger("damage");
+        }
+
         private void Die()
         {
             //Trigger death toggle in body animator
+            bodyAnimator.SetTrigger("die");
             TurnOffMovement();
         }
 

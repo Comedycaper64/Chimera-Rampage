@@ -12,9 +12,9 @@ namespace Enemies.Twig
         public override void Enter()
         {
             //Trigger death animation
-            stateMachine.animator.SetTrigger("die");
             stateMachine.isDead = true;
             stateMachine.bodyCollider.enabled = false;
+            stateMachine.animator.SetTrigger("die");
         }
 
         public override void Exit()

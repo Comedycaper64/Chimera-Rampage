@@ -45,6 +45,9 @@ TagManager:
   - name: Chimera
     uniqueID: 7546265
     locked: 0
+  - name: Above Chimera
+    uniqueID: 523426975
+    locked: 0
   - name: UI
     uniqueID: 2834208501
     locked: 0

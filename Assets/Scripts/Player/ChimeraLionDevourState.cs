@@ -27,6 +27,7 @@ namespace Chimera
                 stateMachine.enemyLayerMask
             );
             Vector2 cursorDirection = stateMachine.cursor.GetCursorDirection();
+            bool healed = false;
             //List<HealthSystem> unitsToDamage = new List<HealthSystem>();
             foreach (Collider2D collider in colliders)
             {
@@ -48,8 +49,13 @@ namespace Chimera
                                 / 4f
                         )
                     );
+                    healed = true;
                     healthSystem.TakeDamage(stateMachine.stats.devourDamage);
                 }
+            }
+            if (healed)
+            {
+                stateMachine.lionDevourVFX.Play();
             }
             stateTimer = stateTime;
         }
