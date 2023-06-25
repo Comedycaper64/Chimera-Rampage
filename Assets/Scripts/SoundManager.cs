@@ -23,6 +23,9 @@ public class SoundManager : MonoBehaviour
     private float playbackSpeed;
 
     [SerializeField]
+    private float playbackOffset;
+
+    [SerializeField]
     private float musicQuietFactor;
 
     private ChimeraStateMachine stateMachine;
@@ -59,6 +62,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = sampleClip;
         audioSource.Play();
         float sampleLength = sampleClip.length / playbackSpeed;
+        sampleLength = sampleLength - playbackOffset;
         yield return new WaitForSeconds(sampleLength);
         StartCoroutine(PlayAudioSample());
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies.Elemental;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -74,6 +75,7 @@ namespace Chimera
             LevelManager.OnChimeraRespawn += Respawn;
             DialogueManager.Instance.OnConversationStart += TurnOffMovement;
             DialogueManager.Instance.OnConversationEnd += TurnOnMovement;
+            ElementalStateMachine.EndGame += TurnInvincible;
             TurnOffMovement();
         }
 
@@ -85,6 +87,12 @@ namespace Chimera
             LevelManager.OnChimeraRespawn -= Respawn;
             DialogueManager.Instance.OnConversationStart -= TurnOffMovement;
             DialogueManager.Instance.OnConversationEnd -= TurnOnMovement;
+            ElementalStateMachine.EndGame -= TurnInvincible;
+        }
+
+        private void TurnInvincible(object sender, EventArgs e)
+        {
+            health.isInvincible = true;
         }
 
         private void TakeDamage()
@@ -122,6 +130,7 @@ namespace Chimera
         public void TurnOnMovement()
         {
             movement.ToggleMove(true);
+            inputManager.isPrimaryAbilityHeld = false;
             canUseAbilties = true;
         }
     }

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e883bff11ee5e5a4d8d8284ff257d797
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Berenika
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d5de79c0ca6122e46bba91c5651682ff, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

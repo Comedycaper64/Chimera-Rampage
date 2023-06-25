@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803244d48e9d78945a948c273aecc3ee, type: 3}
   m_Name: Encounter 3
   m_EditorClassIdentifier: 
-  twigs: 100
-  dryads: 20
+  twigs: 60
+  dryads: 15
   myconids: 0
   encounterUnitLimit: 20
   areaMin: {x: -35.7, y: -78.6, z: 0}

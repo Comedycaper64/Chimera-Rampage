@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803244d48e9d78945a948c273aecc3ee, type: 3}
   m_Name: Encounter 1
   m_EditorClassIdentifier: 
-  twigs: 50
+  twigs: 30
   dryads: 0
   myconids: 0
   encounterUnitLimit: 10
