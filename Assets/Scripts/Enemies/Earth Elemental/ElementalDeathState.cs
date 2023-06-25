@@ -11,17 +11,14 @@ namespace Enemies.Elemental
 
         public override void Enter()
         {
-            throw new System.NotImplementedException();
+            stateMachine.animator.SetTrigger("death");
+            stateMachine.isDead = true;
+            stateMachine.bodyCollider.enabled = false;
+            DialogueManager.Instance.StartConversation(stateMachine.endOfGameDialogue);
         }
 
-        public override void Exit()
-        {
-            throw new System.NotImplementedException();
-        }
+        public override void Exit() { }
 
-        public override void Tick(float deltaTime)
-        {
-            throw new System.NotImplementedException();
-        }
+        public override void Tick(float deltaTime) { }
     }
 }

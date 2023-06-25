@@ -16,7 +16,8 @@ namespace Enemies.Elemental
 
         public override void Exit()
         {
-            stateMachine.animator.SetBool("idle", true);
+            stateMachine.animator.SetBool("idle", false);
+            stateMachine.bodyCollider.enabled = true;
         }
 
         public override void Tick(float deltaTime)

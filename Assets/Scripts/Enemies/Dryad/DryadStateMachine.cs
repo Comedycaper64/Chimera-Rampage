@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies.Elemental;
 using UnityEngine;
 
 namespace Enemies.Dryad
@@ -25,11 +26,13 @@ namespace Enemies.Dryad
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
             health.OnDeath += Health_OnDeath;
+            ElementalStateMachine.EndGame += Health_OnDeath;
         }
 
         private void OnDisable()
         {
             health.OnDeath -= Health_OnDeath;
+            ElementalStateMachine.EndGame -= Health_OnDeath;
         }
 
         private void Start()
@@ -57,7 +60,7 @@ namespace Enemies.Dryad
             stats.attackIntervals = originalSpeed;
         }
 
-        private void Health_OnDeath()
+        private void Health_OnDeath(object sender, EventArgs e)
         {
             OnAnyEnemyDeath?.Invoke();
             SwitchState(new DryadDeathState(this));

@@ -46,7 +46,7 @@ namespace Enemies.Elemental
                         healthSystem.TakeDamage(stateMachine.stats.quakeDamage);
                     }
                 }
-
+                stateMachine.quakeArea.gameObject.SetActive(false);
                 attacked = true;
             }
 

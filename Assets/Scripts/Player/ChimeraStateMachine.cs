@@ -92,7 +92,7 @@ namespace Chimera
             bodyAnimator.SetTrigger("damage");
         }
 
-        private void Die()
+        private void Die(object sender, EventArgs e)
         {
             //Trigger death toggle in body animator
             bodyAnimator.SetTrigger("die");

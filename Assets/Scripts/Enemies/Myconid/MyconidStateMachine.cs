@@ -69,7 +69,7 @@ namespace Enemies.Myconid
             animator.SetTrigger("damage");
         }
 
-        private void Health_OnDeath()
+        private void Health_OnDeath(object sender, EventArgs e)
         {
             OnAnyEnemyDeath?.Invoke();
             if (debuffCoroutine != null)

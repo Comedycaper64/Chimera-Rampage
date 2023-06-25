@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Encounter 1
   m_EditorClassIdentifier: 
   twigs: 50
-  dryads: 5
-  myconids: 5
+  dryads: 0
+  myconids: 0
   encounterUnitLimit: 10
   areaMin: {x: -73.41, y: -7.96, z: 0}
   areaMax: {x: -31.6, y: 8.65, z: 0}

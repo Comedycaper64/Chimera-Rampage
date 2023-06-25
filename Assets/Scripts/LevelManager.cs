@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Chimera;
+using Enemies.Elemental;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,6 +15,9 @@ public class LevelManager : MonoBehaviour
     private GameObject deathUI;
 
     [SerializeField]
+    private GameObject restartButton;
+
+    [SerializeField]
     private List<LevelGate> levelGates = new List<LevelGate>();
 
     private void Start()
@@ -21,6 +26,7 @@ public class LevelManager : MonoBehaviour
         chimera.health.OnDeath += TriggerDeathUI;
         EncounterArena.OnAnyEncounterStart += RaiseEntryGates;
         EnemyManager.OnEncounterFinish += LowerExitGates;
+        ElementalStateMachine.EndGame += EnableRestartButton;
     }
 
     private void OnDisable()
@@ -28,6 +34,12 @@ public class LevelManager : MonoBehaviour
         chimera.health.OnDeath -= TriggerDeathUI;
         EncounterArena.OnAnyEncounterStart -= RaiseEntryGates;
         EnemyManager.OnEncounterFinish -= LowerExitGates;
+        ElementalStateMachine.EndGame -= EnableRestartButton;
+    }
+
+    private void EnableRestartButton(object sender, EventArgs e)
+    {
+        restartButton.SetActive(true);
     }
 
     private void LowerExitGates(object sender, EnemyEncounter encounter)
@@ -44,9 +56,14 @@ public class LevelManager : MonoBehaviour
         gateToRaise.gameObject.SetActive(true);
     }
 
-    private void TriggerDeathUI()
+    private void TriggerDeathUI(object sender, EventArgs e)
     {
         deathUI.SetActive(true);
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void RespawnLevel()

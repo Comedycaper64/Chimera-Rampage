@@ -7,7 +7,6 @@ public class ElementalStats : MonoBehaviour
     public int health;
     public float encounterStartRange;
     public float cooldownTime;
-    public float dryadSpawnChance;
 
     [Header("Quake")]
     public float quakeChance;
@@ -16,7 +15,12 @@ public class ElementalStats : MonoBehaviour
 
     [Header("Rock Fall")]
     public float rockFallChance;
+    public float rockFallVariance;
     public int rockFallDamage;
     public float rockFallArea;
     public float rockFallNumber;
+
+    [Header("Dryad Summon")]
+    public float dryadSpawnChance;
+    public int dryadSpawnNumber;
 }

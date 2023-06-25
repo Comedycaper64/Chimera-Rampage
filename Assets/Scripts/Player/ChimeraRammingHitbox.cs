@@ -8,6 +8,7 @@ namespace Chimera
     public class ChimeraRammingHitbox : MonoBehaviour
     {
         private CircleCollider2D rammingCollider;
+        private List<HealthSystem> unitsHit = new List<HealthSystem>();
         private int damage;
         private float knockback;
 
@@ -20,6 +21,7 @@ namespace Chimera
         public void ToggleHitbox(bool toggle)
         {
             rammingCollider.enabled = toggle;
+            unitsHit.Clear();
         }
 
         public void ToggleHitbox(bool toggle, int damage, float knockback, float colliderArea)
@@ -28,6 +30,7 @@ namespace Chimera
             this.damage = damage;
             this.knockback = knockback;
             rammingCollider.radius = colliderArea;
+            unitsHit.Clear();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -36,6 +39,7 @@ namespace Chimera
             if (
                 other.TryGetComponent<HealthSystem>(out HealthSystem healthSystem)
                 && (other.gameObject.layer == 6)
+                && !unitsHit.Contains(healthSystem)
             )
             {
                 healthSystem.TakeDamage(damage);
@@ -53,6 +57,7 @@ namespace Chimera
                 ).normalized;
                 Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
                 rb.AddForce(directionToHitUnit * knockback, ForceMode2D.Impulse);
+                unitsHit.Add(healthSystem);
             }
         }
     }

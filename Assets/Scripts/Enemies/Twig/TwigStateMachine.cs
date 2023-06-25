@@ -78,7 +78,7 @@ namespace Enemies.Twig
         //     //canMove = true;
         // }
 
-        private void Health_OnDeath()
+        private void Health_OnDeath(object sender, EventArgs e)
         {
             OnAnyEnemyDeath?.Invoke();
             SwitchState(new TwigDeathState(this));

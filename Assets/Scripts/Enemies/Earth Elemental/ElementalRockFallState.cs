@@ -15,7 +15,7 @@ namespace Enemies.Elemental
         public override void Enter()
         {
             stateMachine.animator.SetTrigger("rock");
-            stateMachine.StartCoroutine(SpawnRocks());
+            stateMachine.rockFallCoroutine = stateMachine.StartCoroutine(SpawnRocks());
             stateTimer = stateTime;
         }
 
@@ -36,9 +36,15 @@ namespace Enemies.Elemental
             for (int i = 0; i < stateMachine.stats.rockFallNumber; i++)
             {
                 yield return new WaitForSeconds(0.5f);
-                Vector2 spawnPosition = new Vector2(
-                    Random.Range(stateMachine.arenaMin.x, stateMachine.arenaMax.x),
-                    Random.Range(stateMachine.arenaMin.y, stateMachine.arenaMax.y)
+                Vector3 spawnPosition = new Vector2(
+                    Random.Range(
+                        -stateMachine.stats.rockFallVariance,
+                        stateMachine.stats.rockFallVariance
+                    ),
+                    Random.Range(
+                        -stateMachine.stats.rockFallVariance,
+                        stateMachine.stats.rockFallVariance
+                    )
                 );
                 EmberProjectile rock = GameObject
                     .Instantiate(
@@ -48,7 +54,7 @@ namespace Enemies.Elemental
                     )
                     .GetComponent<EmberProjectile>();
                 rock.SetupProjectile(
-                    spawnPosition,
+                    stateMachine.playerHealth.transform.position + spawnPosition,
                     stateMachine.stats.rockFallDamage,
                     stateMachine.stats.rockFallArea
                 );

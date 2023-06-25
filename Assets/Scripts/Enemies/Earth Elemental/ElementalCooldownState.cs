@@ -31,6 +31,7 @@ namespace Enemies.Elemental
             if (stateTimer <= 0f)
             {
                 stateMachine.SwitchState(GetNextState());
+                return;
             }
         }
 
@@ -42,12 +43,20 @@ namespace Enemies.Elemental
                 + stateMachine.stats.dryadSpawnChance;
             float chance = Random.Range(0f, totalChance);
 
+            //Debug.Log(chance);
+
             if ((chance <= stateMachine.stats.dryadSpawnChance) && !stateMachine.dryadsActive)
             {
                 return new ElementalDryadSpawnState(stateMachine);
             }
             else if (
-                chance <= (stateMachine.stats.dryadSpawnChance + stateMachine.stats.quakeChance)
+                (chance <= (stateMachine.stats.dryadSpawnChance + stateMachine.stats.quakeChance))
+                && (
+                    Vector3.Distance(
+                        stateMachine.transform.position,
+                        stateMachine.playerHealth.transform.position
+                    ) < stateMachine.stats.quakeRange
+                )
             )
             {
                 return new ElementalQuakeState(stateMachine);

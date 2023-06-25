@@ -8,7 +8,7 @@ public class HealthSystem : MonoBehaviour
     public EventHandler<float> OnNewHealth;
 
     public Action OnTakeDamage;
-    public Action OnDeath;
+    public EventHandler OnDeath;
 
     private float maxHealth;
 
@@ -75,7 +75,7 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
-        OnDeath?.Invoke();
+        OnDeath?.Invoke(this, EventArgs.Empty);
         //Destroy(gameObject);
     }
 }
