@@ -15,7 +15,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.goatHeadAnimator.SetTrigger("wail");
-            stateMachine.goatWailVFX.Play();
+            stateMachine.goatWailVFX.SetActive(true);
             AudioSource.PlayClipAtPoint(
                 stateMachine.goatWailSFX,
                 stateMachine.transform.position,
@@ -24,8 +24,7 @@ namespace Chimera
             Collider2D[] colliders;
             colliders = Physics2D.OverlapCircleAll(
                 stateMachine.transform.position,
-                stateMachine.stats.wailRange,
-                stateMachine.enemyLayerMask
+                stateMachine.stats.wailRange
             );
 
             foreach (Collider2D collider in colliders)
@@ -37,6 +36,11 @@ namespace Chimera
                 }
 
                 if (!collider.TryGetComponent<HealthSystem>(out HealthSystem healthSystem))
+                {
+                    continue;
+                }
+
+                if (healthSystem.isPlayer)
                 {
                     continue;
                 }
@@ -53,6 +57,7 @@ namespace Chimera
         public override void Exit()
         {
             stateMachine.cooldowns.SetWailCooldown();
+            stateMachine.goatWailVFX.SetActive(false);
         }
 
         public override void Tick(float deltaTime)

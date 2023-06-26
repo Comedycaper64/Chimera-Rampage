@@ -16,7 +16,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.goatHeadAnimator.SetTrigger("ram");
-            stateMachine.goatRamVFX.Play();
+            //stateMachine.goatRamVFX.Play();
             AudioSource.PlayClipAtPoint(
                 stateMachine.goatRamSFX,
                 stateMachine.transform.position,

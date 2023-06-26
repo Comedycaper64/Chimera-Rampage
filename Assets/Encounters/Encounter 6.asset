@@ -16,6 +16,6 @@ MonoBehaviour:
   dryads: 0
   myconids: 0
   encounterUnitLimit: 1
-  areaMin: {x: -156.9, y: -217.3, z: 0}
-  areaMax: {x: -117.4, y: -135, z: 0}
+  areaMin: {x: 100, y: -217.3, z: 0}
+  areaMax: {x: 200, y: -135, z: 0}
   encounterNumber: 6

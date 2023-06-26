@@ -13,6 +13,7 @@ public class CheckpointSetter : MonoBehaviour
         )
         {
             stateMachine.SetRespawnPoint(transform.position);
+            stateMachine.health.Heal(999f);
         }
     }
 }

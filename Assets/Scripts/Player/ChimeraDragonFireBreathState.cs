@@ -15,7 +15,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.dragonHeadAnimator.SetTrigger("flameBreath");
-            stateMachine.fireBreathVFX.Play();
+            stateMachine.fireBreathVFX.SetActive(true);
             AudioSource.PlayClipAtPoint(
                 stateMachine.fireBreathSFX,
                 stateMachine.transform.position,
@@ -27,6 +27,7 @@ namespace Chimera
         public override void Exit()
         {
             stateMachine.cooldowns.SetBreathCooldown();
+            stateMachine.fireBreathVFX.SetActive(false);
         }
 
         public override void Tick(float deltaTime)

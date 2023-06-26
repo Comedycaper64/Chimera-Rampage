@@ -10,7 +10,7 @@ namespace Enemies.Myconid
         private CircleCollider2D cloudCollider;
 
         [SerializeField]
-        private VisualEffect cloudVFX;
+        private GameObject cloudVFX;
         private float healAmount;
 
         private void Awake()
@@ -29,11 +29,11 @@ namespace Enemies.Myconid
             cloudCollider.enabled = enable;
             if (enable)
             {
-                cloudVFX.Play();
+                cloudVFX.SetActive(true);
             }
             else
             {
-                cloudVFX.Stop();
+                cloudVFX.SetActive(false);
             }
         }
 

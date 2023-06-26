@@ -19,12 +19,14 @@ namespace Chimera
         public ChimeraCursorPointer cursor;
         public ChimeraRammingHitbox rammingHitbox;
 
-        [Header("Visual Effects")]
-        public VisualEffect fireBreathVFX;
-        public VisualEffect clawSwipeVFX;
-        public VisualEffect goatRamVFX;
-        public VisualEffect goatWailVFX;
-        public VisualEffect lionDevourVFX;
+        [Header("Visual Sprites")]
+        public GameObject fireBreathVFX;
+        public GameObject clawSwipeVFX;
+
+        //public VisualEffect goatRamVFX;
+        public GameObject goatWailVFX;
+
+        //public VisualEffect lionDevourVFX;
 
         [Header("Sound Effects")]
         public AudioClip emberLaunchSFX;

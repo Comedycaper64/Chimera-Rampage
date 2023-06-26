@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5227296537356907478}
   - component: {fileID: 5227296537356907477}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Temp Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5227296537360331090}
   - component: {fileID: 5227296537360331088}
   - component: {fileID: 5227296537360331089}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Dryad Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

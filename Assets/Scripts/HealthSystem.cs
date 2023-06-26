@@ -43,16 +43,7 @@ public class HealthSystem : MonoBehaviour
 
         OnNewHealth?.Invoke(this, health / maxHealth);
 
-        // if (!isPlayer)
-        // {
-        //     AudioSource.PlayClipAtPoint(
-        //         damageSFX,
-        //         transform.position,
-        //         SoundManager.Instance.GetSoundEffectVolume()
-        //     );
-        // }
-
-        if (health == 0)
+        if (health == 0f)
         {
             Die();
         }

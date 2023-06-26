@@ -13,6 +13,7 @@ namespace Enemies.Twig
         public Collider2D bodyCollider;
         public Animator animator;
         public bool isDead;
+        private AudioSource audioSource;
 
         public static Action OnAnyEnemyDeath;
 
@@ -22,6 +23,7 @@ namespace Enemies.Twig
             playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthSystem>();
             stats = GetComponent<TwigStats>();
             bodyCollider = GetComponent<Collider2D>();
+            audioSource = GetComponent<AudioSource>();
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
             health.OnTakeDamage += Health_OnDamage;
@@ -37,6 +39,11 @@ namespace Enemies.Twig
         private void Health_OnDamage()
         {
             animator.SetTrigger("damage");
+            if (!audioSource.isPlaying)
+            {
+                audioSource.volume = SoundManager.Instance.GetSoundEffectVolume() * 0.25f;
+                audioSource.Play();
+            }
         }
 
         private void Start()
@@ -63,20 +70,6 @@ namespace Enemies.Twig
             yield return new WaitForSeconds(debuffTime);
             stats.movementSpeed = originalSpeed;
         }
-
-        // public void Knockback(Vector2 knockBackDirection, float knockBackForce)
-        // {
-        //     StartCoroutine(KnockbackCoroutine(knockBackDirection, knockBackForce));
-        // }
-
-        // private IEnumerator KnockbackCoroutine(Vector2 knockbackDirection, float knockBackForce)
-        // {
-        //     //canMove = false;
-        //     GetComponent<Rigidbody2D>()
-        //         .AddForce(knockbackDirection * knockBackForce, ForceMode2D.Impulse);
-        //     yield return new WaitForSeconds(1f);
-        //     //canMove = true;
-        // }
 
         private void Health_OnDeath(object sender, EventArgs e)
         {

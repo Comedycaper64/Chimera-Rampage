@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Monolith, Earth Elemental
   characterImages:
-  - {fileID: 21300000, guid: 8eef0540c1faeb84f910c10d6fa7a950, type: 3}
+  - {fileID: 21300000, guid: 90edc4e849e796242856fa6def2c559c, type: 3}
   characterTalkSound: {fileID: 0}
   leftSideCharacterImage: 0
   rightSideCharacterImage: 1

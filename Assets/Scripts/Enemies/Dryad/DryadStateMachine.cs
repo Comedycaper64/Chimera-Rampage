@@ -13,6 +13,7 @@ namespace Enemies.Dryad
         public DryadStats stats;
         public Collider2D bodyCollider;
         public Animator animator;
+        private AudioSource audioSource;
         public GameObject attackProjectile;
         public bool isDead;
         public static Action OnAnyEnemyDeath;
@@ -23,14 +24,17 @@ namespace Enemies.Dryad
             playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthSystem>();
             stats = GetComponent<DryadStats>();
             bodyCollider = GetComponent<Collider2D>();
+            audioSource = GetComponent<AudioSource>();
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
+            health.OnTakeDamage += Health_OnTakeDamage;
             health.OnDeath += Health_OnDeath;
             ElementalStateMachine.EndGame += Health_OnDeath;
         }
 
         private void OnDisable()
         {
+            health.OnTakeDamage -= Health_OnTakeDamage;
             health.OnDeath -= Health_OnDeath;
             ElementalStateMachine.EndGame -= Health_OnDeath;
         }
@@ -58,6 +62,16 @@ namespace Enemies.Dryad
             stats.attackIntervals = stats.attackIntervals * 2;
             yield return new WaitForSeconds(debuffTime);
             stats.attackIntervals = originalSpeed;
+        }
+
+        private void Health_OnTakeDamage()
+        {
+            animator.SetTrigger("damage");
+            if (!audioSource.isPlaying)
+            {
+                audioSource.volume = SoundManager.Instance.GetSoundEffectVolume() * 0.25f;
+                audioSource.Play();
+            }
         }
 
         private void Health_OnDeath(object sender, EventArgs e)

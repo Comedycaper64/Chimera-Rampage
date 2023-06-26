@@ -55,7 +55,7 @@ namespace Chimera
             }
             if (healed)
             {
-                stateMachine.lionDevourVFX.Play();
+                //stateMachine.lionDevourVFX.Play();
             }
             stateTimer = stateTime;
         }

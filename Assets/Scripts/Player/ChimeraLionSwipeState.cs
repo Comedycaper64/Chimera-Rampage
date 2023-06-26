@@ -15,7 +15,7 @@ namespace Chimera
         public override void Enter()
         {
             stateMachine.bodyAnimator.SetTrigger("swipe");
-            stateMachine.clawSwipeVFX.Play();
+            stateMachine.clawSwipeVFX.SetActive(true);
             AudioSource.PlayClipAtPoint(
                 stateMachine.lionSwipeSFX,
                 stateMachine.transform.position,
@@ -52,6 +52,7 @@ namespace Chimera
         public override void Exit()
         {
             stateMachine.cooldowns.SetSwipeCooldown();
+            stateMachine.clawSwipeVFX.SetActive(false);
         }
 
         public override void Tick(float deltaTime)

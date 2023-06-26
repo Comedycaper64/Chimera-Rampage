@@ -14,6 +14,7 @@ namespace Enemies.Elemental
         public ElementalStats stats;
         public Collider2D bodyCollider;
         public Animator animator;
+        private AudioSource audioSource;
         public bool isDead;
         public bool dryadsActive = false;
         private Coroutine debuffCoroutine;
@@ -33,6 +34,7 @@ namespace Enemies.Elemental
             playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthSystem>();
             stats = GetComponent<ElementalStats>();
             bodyCollider = GetComponent<Collider2D>();
+            audioSource = GetComponent<AudioSource>();
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
             health.OnTakeDamage += Health_OnTakeDamage;
@@ -79,6 +81,11 @@ namespace Enemies.Elemental
         private void Health_OnTakeDamage()
         {
             animator.SetTrigger("damage");
+            if (!audioSource.isPlaying)
+            {
+                audioSource.volume = SoundManager.Instance.GetSoundEffectVolume() * 0.25f;
+                audioSource.Play();
+            }
         }
 
         private void Health_OnDeath(object sender, EventArgs e)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Enemies.Dryad;
 using Enemies.Myconid;
 using Enemies.Twig;
+using TMPro;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -26,7 +27,7 @@ public class EnemyManager : MonoBehaviour
     private List<GameObject> unitSpool = new List<GameObject>();
 
     private int unitLimit;
-
+    private int remainingUnits;
     private int aliveUnits;
 
     [SerializeField]
@@ -43,8 +44,10 @@ public class EnemyManager : MonoBehaviour
     private float dryadSpawnChance;
     private float myconidSpawnChance;
 
-    private EnemyEncounter currentEncounter;
+    [SerializeField]
+    private TextMeshProUGUI enemyNumberText;
 
+    private EnemyEncounter currentEncounter;
     private Coroutine encounterCoroutine;
 
     private void Start()
@@ -85,6 +88,10 @@ public class EnemyManager : MonoBehaviour
         spawnAreaMax = encounter.areaMax;
 
         currentEncounter = encounter;
+
+        remainingUnits = encounterTwigs + encounterDryads + encounterMyconids;
+        enemyNumberText.gameObject.SetActive(true);
+        enemyNumberText.text = "Enemies Remaining: " + remainingUnits;
 
         encounterCoroutine = StartCoroutine(SpawnEnemies());
     }
@@ -263,8 +270,11 @@ public class EnemyManager : MonoBehaviour
     private void OnAnyEnemyDeath()
     {
         aliveUnits--;
+        remainingUnits--;
+        enemyNumberText.text = "Enemies Remaining: " + remainingUnits;
         if (aliveUnits <= 0)
         {
+            enemyNumberText.gameObject.SetActive(false);
             OnEncounterFinish?.Invoke(this, currentEncounter);
         }
     }

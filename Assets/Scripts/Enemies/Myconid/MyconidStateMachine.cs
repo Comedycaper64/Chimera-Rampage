@@ -12,6 +12,7 @@ namespace Enemies.Myconid
         public MyconidStats stats;
         public Collider2D bodyCollider;
         public Animator animator;
+        private AudioSource audioSource;
         public MyconidMushroomCloud mushroomCloud;
         public bool isDead;
         public static Action OnAnyEnemyDeath;
@@ -23,6 +24,7 @@ namespace Enemies.Myconid
             playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthSystem>();
             stats = GetComponent<MyconidStats>();
             bodyCollider = GetComponent<Collider2D>();
+            audioSource = GetComponent<AudioSource>();
             bodyCollider.enabled = false;
             health.SetMaxHealth(stats.health);
             health.OnTakeDamage += Health_OnTakeDamage;
@@ -67,6 +69,11 @@ namespace Enemies.Myconid
         private void Health_OnTakeDamage()
         {
             animator.SetTrigger("damage");
+            if (!audioSource.isPlaying)
+            {
+                audioSource.volume = SoundManager.Instance.GetSoundEffectVolume() * 0.25f;
+                audioSource.Play();
+            }
         }
 
         private void Health_OnDeath(object sender, EventArgs e)
